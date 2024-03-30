@@ -23,22 +23,17 @@ export default function Task({
     };
     dispatch({ type: "updated_task_name", task: updatedTask });
   }
-
+  const backgroundClasses =
+    task.recycle && task.complete
+      ? "bg-emerald-100   dark:shadow-lime-950  dark:bg-[#162c2c]   "
+      : task.complete
+        ? "bg-slate-100 opacity-90 dark:bg-slate-800 dark:text-gray-200 "
+        : task.recycle
+          ? "bg-emerald-200 hover:bg-emerald-300   dark:bg-[#224343]  hover:dark:bg-[#316161]"
+          : "shadow-slate-200  dark:shadow-slate-500 dark:hover:bg-slate-600 dark:bg-slate-700 bg-slate-200 hover:bg-slate-300";
   return (
     <div
-      className={` flex flex-wrap gap-2 rounded-sm border border-slate-300 p-2 shadow-sm shadow-slate-200 dark:border-slate-900 dark:shadow-slate-500 dark:hover:bg-slate-600  ${
-        task.complete
-          ? " bg-slate-100 opacity-90 dark:bg-slate-900 dark:text-gray-200 hover:dark:bg-slate-700 "
-          : "bg-slate-200  hover:bg-slate-300 dark:bg-slate-700 "
-      } ${
-        task.recycle
-          ? "  dark:bg-[#113333] hover:dark:bg-[#224343] "
-          : " "
-      }${
-        task.recycle && task.complete
-          ? " dark:bg-[#111111] dark:shadow-lime-950 "
-          : " "
-      }`}
+      className={`shadow-sm p-2 flex border-slate-300 flex-wrap gap-2 dark:border-slate-900 rounded-sm border ${backgroundClasses}`}
     >
       <div className="flex w-2/3 flex-1 items-center gap-1">
         <input

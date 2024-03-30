@@ -9,7 +9,7 @@ type menuProps = {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 export default function Menu({ isOpen, setIsOpen }: menuProps) {
-  let { hideDone, handleHideDone, handleKeepText, keepText } =
+  const { hideDone, handleHideDone, handleKeepText, keepText } =
     useAppContext();
   const [isDark, setIsDark] = useState(
     false || JSON.parse(localStorage.getItem("darkMode")!)
@@ -54,23 +54,23 @@ export default function Menu({ isOpen, setIsOpen }: menuProps) {
         <ul className=" space-y-4">
           <li>
             <Slider
-              handleClick={handleHideDone}
-              enabled={hideDone}
               text={"Hide Done"}
+              enabled={hideDone}
+              handleClick={handleHideDone}
             />
           </li>
           <li>
             <Slider
-              handleClick={handleDarkModeChange}
               text={"Dark Mode"}
               enabled={isDark}
+              handleClick={handleDarkModeChange}
             />
           </li>
           <li>
             <Slider
+              text={"Keep Text"}
               enabled={keepText}
               handleClick={handleKeepText}
-              text={"Keep Text"}
             />
           </li>
           <li></li>

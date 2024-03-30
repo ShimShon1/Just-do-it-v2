@@ -12,7 +12,7 @@ export const appContext = createContext<AppContext | undefined>(
 );
 
 export function useAppContext() {
-  let context = useContext(appContext);
+  const context = useContext(appContext);
   if (context === undefined) {
     throw new Error("App context unavailable, fix man");
   }

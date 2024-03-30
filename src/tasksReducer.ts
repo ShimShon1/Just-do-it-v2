@@ -63,9 +63,6 @@ export default function tasksReducer(
     }
 
     case "recycle_all": {
-      if (action.task == undefined) {
-        throw new Error("No Task provided to reducer");
-      }
       const updated = state.map((task) =>
         task.recycle ? { ...task, complete: false } : task
       );

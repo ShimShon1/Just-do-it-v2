@@ -1,6 +1,6 @@
 // File: Header.jsx
 
-import  { useState } from "react";
+import { useState } from "react";
 import Menu from "./Menu";
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -30,7 +30,7 @@ export default function Header() {
         </svg>
       </div>
 
-      <h2 className="text-lg lg:text-xl">Do Stuff</h2>
+      <p className="text-lg lg:text-xl">Do Stuff</p>
     </header>
   );
 }

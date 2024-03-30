@@ -65,6 +65,7 @@ export default function App() {
   }
 
   function handleRecycleAll() {
+    console.log("recycle all");
     dispatch({
       type: "recycle_all",
     });
