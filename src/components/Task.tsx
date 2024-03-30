@@ -1,48 +1,27 @@
 // File: task.jsx
 
-import { useState } from "react";
-import { localSave } from "../../utils";
 import { Task as TaskType } from "../App";
+import { ActionType } from "../tasksReducer";
 type TaskProps = {
   task: TaskType;
-  tasks: TaskType[];
+  dispatch: React.Dispatch<ActionType>;
   handleCheckTask: (task: TaskType) => void;
-  handleRemoveTask: (id: string) => void;
+  handleRemoveTask: (task: TaskType) => void;
   handleRecycleTask: (task: TaskType) => void;
 };
 export default function Task({
-  tasks,
   task,
   handleCheckTask,
   handleRemoveTask,
   handleRecycleTask,
+  dispatch,
 }: TaskProps) {
-  const [taskName, setTaskName] = useState(task.name);
-
   function handleNameChange(e: React.ChangeEvent<HTMLInputElement>) {
-    function dynamicLocalSave(
-      e: React.ChangeEvent<HTMLInputElement>
-    ) {
-      try {
-        let updated = tasks.map(item =>
-          item.id === task.id
-            ? {
-                ...item,
-                name: e.target.value,
-              }
-            : item
-        );
-        console.log("updating...");
-        localSave(updated);
-        console.log("local save completed");
-      } catch (error) {
-        throw new Error("faileddddd");
-      }
-    }
-    setTaskName(e.target.value);
-    setTimeout(() => {
-      dynamicLocalSave(e);
-    }, 0);
+    const updatedTask = {
+      ...task,
+      name: e.target.value,
+    };
+    dispatch({ type: "updated_task_name", task: updatedTask });
   }
 
   return (
@@ -75,14 +54,14 @@ export default function Task({
             "w-full bg-inherit " +
             (task.complete ? "line-through" : "")
           }
-          value={taskName}
+          value={task.name}
           onChange={handleNameChange}
         />
       </div>
       <button
         className="rounded  border border-black bg-red-400 bg-opacity-70 p-1 text-sm tracking-tighter hover:bg-opacity-100 
         active:bg-red-200 "
-        onClick={() => handleRemoveTask(task.id)}
+        onClick={() => handleRemoveTask(task)}
       >
         Remove
       </button>

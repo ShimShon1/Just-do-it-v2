@@ -8,7 +8,6 @@ import tasksReducer from "./tasksReducer.ts";
 import { localSave } from "../utils.js";
 import Header from "./components/Header.tsx";
 import { appContext } from "./AppContext.ts";
-import useCallAtTime from "./useCallAtTime.ts";
 export type Task = {
   name: string;
   complete: boolean;
@@ -18,9 +17,10 @@ export type Task = {
 
 export default function App() {
   //initial variables and state
-  const [tasks, dispatch] = useReducer<
-    (state: Task[] | [], action: any) => Task[] | []
-  >(tasksReducer, JSON.parse(localStorage.getItem("tasks")!) || []);
+  const [tasks, dispatch] = useReducer(
+    tasksReducer,
+    JSON.parse(localStorage.getItem("tasks")!) || []
+  );
   const [hideDone, setHideDone] = useState<boolean>(
     JSON.parse(localStorage.getItem("hideDone")!) || false
   );
@@ -28,7 +28,6 @@ export default function App() {
     JSON.parse(localStorage.getItem("keepText")!) || false
   );
 
-  useCallAtTime(17, () => handleRecycleAll());
   function handleHideDone() {
     setHideDone(!hideDone);
   }
@@ -46,10 +45,10 @@ export default function App() {
     });
   }
 
-  function handleRemoveTask(id: string) {
+  function handleRemoveTask(task: Task) {
     dispatch({
       type: "remove_task",
-      taskId: id,
+      task: task,
     });
   }
   function handleCheckTask(task: Task) {
@@ -74,11 +73,11 @@ export default function App() {
 
   //filter if needed
   if (hideDone) {
-    tasksDisplayed = tasks.filter(item => item.complete != true);
+    tasksDisplayed = tasks.filter((item) => item.complete != true);
   } else {
     tasksDisplayed = [...tasks];
   }
-  let taskElems = tasksDisplayed.map(task => {
+  const taskElems = tasksDisplayed.map((task) => {
     return (
       <Task
         key={task.id}
@@ -86,7 +85,7 @@ export default function App() {
         handleRemoveTask={handleRemoveTask}
         handleCheckTask={handleCheckTask}
         handleRecycleTask={handleRecycleTask}
-        tasks={tasks}
+        dispatch={dispatch}
       />
     );
   });
