@@ -2,20 +2,13 @@
 
 import { Task as TaskType } from "../App";
 import { ActionType } from "../tasksReducer";
-type TaskProps =
-  {
-    task: TaskType;
-    dispatch: React.Dispatch<ActionType>;
-    handleCheckTask: (
-      task: TaskType
-    ) => void;
-    handleRemoveTask: (
-      task: TaskType
-    ) => void;
-    handleRecycleTask: (
-      task: TaskType
-    ) => void;
-  };
+type TaskProps = {
+  task: TaskType;
+  dispatch: React.Dispatch<ActionType>;
+  handleCheckTask: (task: TaskType) => void;
+  handleRemoveTask: (task: TaskType) => void;
+  handleRecycleTask: (task: TaskType) => void;
+};
 export default function Task({
   task,
   handleCheckTask,
@@ -23,26 +16,18 @@ export default function Task({
   handleRecycleTask,
   dispatch,
 }: TaskProps) {
-  function handleNameChange(
-    e: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const updatedTask =
-      {
-        ...task,
-        name: e
-          .target
-          .value,
-      };
-    dispatch(
-      {
-        type: "updated_task_name",
-        task: updatedTask,
-      }
-    );
+  function handleNameChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const updatedTask = {
+      ...task,
+      name: e.target.value,
+    };
+    dispatch({
+      type: "updated_task_name",
+      task: updatedTask,
+    });
   }
   const backgroundClasses =
-    task.recycle &&
-    task.complete
+    task.recycle && task.complete
       ? "bg-emerald-100 dark:bg-[#112021]"
       : task.complete
         ? "bg-slate-100 opacity-90 dark:bg-slate-800 dark:text-gray-200 "
@@ -57,53 +42,31 @@ export default function Task({
         <input
           className=" cursor-pointer"
           type="checkbox"
-          checked={
-            task.complete
-              ? true
-              : false
-          }
+          checked={task.complete ? true : false}
           name=""
           id=""
-          onChange={() =>
-            handleCheckTask(
-              task
-            )
-          }
+          onChange={() => handleCheckTask(task)}
         />
         <input
           className={
             "w-full bg-inherit " +
-            (task.complete
-              ? "line-through"
-              : "")
+            (task.complete ? "line-through" : "")
           }
-          value={
-            task.name
-          }
-          onChange={
-            handleNameChange
-          }
+          value={task.name}
+          onChange={handleNameChange}
         />
       </div>
       <button
         className="rounded  border border-black bg-red-400 bg-opacity-70 p-1 text-sm tracking-tighter hover:bg-opacity-100 
         active:bg-red-200 "
-        onClick={() =>
-          handleRemoveTask(
-            task
-          )
-        }
+        onClick={() => handleRemoveTask(task)}
       >
         Remove
       </button>
       <button
         className=" rounded border border-black bg-emerald-400 bg-opacity-70 p-1 text-sm tracking-tighter  hover:bg-emerald-300 hover:bg-opacity-100
         active:bg-red-200 dark:hover:bg-opacity-80 "
-        onClick={() =>
-          handleRecycleTask(
-            task
-          )
-        }
+        onClick={() => handleRecycleTask(task)}
       >
         Recycle
       </button>

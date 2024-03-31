@@ -40,7 +40,7 @@ export default function tasksReducer(
       if (action.task == undefined) {
         throw new Error("No Task provided to reducer");
       }
-      const updated = state.map((task) =>
+      const updated = state.map(task =>
         action.task?.id === task.id
           ? { ...task, complete: !task.complete }
           : task
@@ -53,7 +53,7 @@ export default function tasksReducer(
       }
       //recycle
       console.log("recyclinggggggg");
-      const updated = state.map((task) =>
+      const updated = state.map(task =>
         action.task?.id === task.id
           ? { ...task, recycle: !task.recycle }
           : task
@@ -63,7 +63,7 @@ export default function tasksReducer(
     }
 
     case "recycle_all": {
-      const updated = state.map((task) =>
+      const updated = state.map(task =>
         task.recycle ? { ...task, complete: false } : task
       );
       return sortTasks(updated);
@@ -73,14 +73,14 @@ export default function tasksReducer(
       if (action.task == undefined) {
         throw new Error("No Task provided to reducer");
       }
-      state = state.filter((item) => item.id !== action.task?.id);
+      state = state.filter(item => item.id !== action.task?.id);
       return state;
     }
     case "updated_task_name": {
       if (action.task == undefined)
         throw new Error("No task provided to reducer");
 
-      return state.map((t) => {
+      return state.map(t => {
         return t.id === action.task?.id ? action.task : t;
       });
     }

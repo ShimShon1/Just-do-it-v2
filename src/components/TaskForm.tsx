@@ -15,7 +15,7 @@ export default function TaskForm({ handleAddTask }: FormProps) {
 
   return (
     <form
-      onSubmit={(d) => {
+      onSubmit={d => {
         handleAddTask(d, taskName);
         if (!keepText) {
           setTaskName("");
@@ -24,7 +24,7 @@ export default function TaskForm({ handleAddTask }: FormProps) {
       className="m-auto mt-2 grid grid-cols-[1fr,auto]   gap-2 overflow-hidden sm:w-3/4 "
     >
       <input
-        onChange={(e) => setTaskName(e.target.value)}
+        onChange={e => setTaskName(e.target.value)}
         value={taskName}
         placeholder="Your task here..."
         type="text"
