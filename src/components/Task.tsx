@@ -36,7 +36,7 @@ export default function Task({
           : "shadow-slate-300  dark:shadow-slate-500 dark:hover:bg-slate-600 dark:bg-slate-700 bg-slate-200 hover:bg-slate-300";
   return (
     <div
-      className={`flex flex-wrap gap-2 rounded-sm border border-slate-300 p-2 shadow-sm dark:border-slate-900 ${backgroundClasses}`}
+      className={`flex cursor-move flex-wrap gap-2 rounded-sm border border-slate-300 p-2 shadow-sm dark:border-slate-900 ${backgroundClasses}`}
     >
       <div className="flex w-2/3 flex-1 items-center gap-1">
         <input

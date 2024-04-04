@@ -118,14 +118,16 @@ export default function App() {
           >
             {tasksDisplayed.map(task => {
               return (
-                <Task
-                  key={task.id}
-                  task={task}
-                  handleRemoveTask={handleRemoveTask}
-                  handleCheckTask={handleCheckTask}
-                  handleRecycleTask={handleRecycleTask}
-                  dispatch={dispatch}
-                />
+                <Reorder.Item value={task} key={task.id}>
+                  <Task
+                    key={task.id}
+                    task={task}
+                    handleRemoveTask={handleRemoveTask}
+                    handleCheckTask={handleCheckTask}
+                    handleRecycleTask={handleRecycleTask}
+                    dispatch={dispatch}
+                  />
+                </Reorder.Item>
               );
             })}
           </Reorder.Group>
