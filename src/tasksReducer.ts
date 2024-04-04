@@ -10,10 +10,12 @@ export type ActionType = {
     | "recycle_all"
     | "add_task"
     | "remove_task"
-    | "updated_task_name";
+    | "updated_task_name"
+    | "set_tasks";
 
   task?: Task;
   taskName?: string;
+  tasks?: Task[];
 };
 
 export default function tasksReducer(
@@ -21,6 +23,11 @@ export default function tasksReducer(
   action: ActionType
 ) {
   switch (action.type) {
+    case "set_tasks": {
+      if (action.tasks == undefined)
+        throw new Error("No Task name provided to reducer");
+      return action.tasks;
+    }
     case "add_task": {
       if (action.taskName == undefined)
         throw new Error("No Task name provided to reducer");
@@ -33,8 +40,6 @@ export default function tasksReducer(
       const newTasks = sortTasks([...state, newTask]);
       return newTasks;
     }
-
-    //need for task in all others, check for it
 
     case "check_task": {
       if (action.task == undefined) {

@@ -8,6 +8,7 @@ import tasksReducer from "./tasksReducer.ts";
 import { localSave } from "../utils.js";
 import Header from "./components/Header.tsx";
 import { appContext } from "./AppContext.ts";
+import { Reorder } from "framer-motion";
 export type Task = {
   name: string;
   complete: boolean;
@@ -77,18 +78,6 @@ export default function App() {
   } else {
     tasksDisplayed = [...tasks];
   }
-  const taskElems = tasksDisplayed.map(task => {
-    return (
-      <Task
-        key={task.id}
-        task={task}
-        handleRemoveTask={handleRemoveTask}
-        handleCheckTask={handleCheckTask}
-        handleRecycleTask={handleRecycleTask}
-        dispatch={dispatch}
-      />
-    );
-  });
 
   useEffect(() => {
     localSave(tasks);
@@ -120,9 +109,26 @@ export default function App() {
         <hr />
 
         <section className="w-full p-4">
-          <div className="m-auto grid grid-cols-1 gap-2   sm:w-3/4">
-            {taskElems}
-          </div>
+          <Reorder.Group
+            values={tasksDisplayed}
+            onReorder={tasks =>
+              dispatch({ type: "set_tasks", tasks: tasks })
+            }
+            className="m-auto grid grid-cols-1 gap-2   sm:w-3/4"
+          >
+            {tasksDisplayed.map(task => {
+              return (
+                <Task
+                  key={task.id}
+                  task={task}
+                  handleRemoveTask={handleRemoveTask}
+                  handleCheckTask={handleCheckTask}
+                  handleRecycleTask={handleRecycleTask}
+                  dispatch={dispatch}
+                />
+              );
+            })}
+          </Reorder.Group>
           <button
             className="m-auto mt-3 block  rounded border  border-black bg-emerald-400 bg-opacity-70 p-1 tracking-tighter   hover:bg-emerald-300 hover:bg-opacity-100
         active:bg-red-200 dark:border-slate-400 dark:hover:bg-opacity-80 "

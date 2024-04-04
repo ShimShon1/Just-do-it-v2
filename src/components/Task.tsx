@@ -40,7 +40,7 @@ export default function Task({
     >
       <div className="flex w-2/3 flex-1 items-center gap-1">
         <input
-          className=" cursor-pointer"
+          className=" cursor-pointer "
           type="checkbox"
           checked={task.complete ? true : false}
           name=""
