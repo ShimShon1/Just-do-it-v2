@@ -9,6 +9,7 @@ import { localSave } from "../utils.js";
 import Header from "./components/Header.tsx";
 import { appContext } from "./AppContext.ts";
 import { Reorder } from "framer-motion";
+
 export type Task = {
   name: string;
   complete: boolean;
@@ -21,6 +22,10 @@ export default function App() {
   const [tasks, dispatch] = useReducer(
     tasksReducer,
     JSON.parse(localStorage.getItem("tasks")!) || []
+  );
+  const [isDark, setIsDark] = useState(
+    false ||
+      (JSON.parse(localStorage.getItem("darkMode")!) as boolean)
   );
   const [hideDone, setHideDone] = useState<boolean>(
     JSON.parse(localStorage.getItem("hideDone")!) || false
@@ -100,6 +105,8 @@ export default function App() {
               keepText,
               handleHideDone,
               handleKeepText,
+              isDark,
+              setIsDark,
             }}
           >
             <Header />
@@ -118,16 +125,15 @@ export default function App() {
           >
             {tasksDisplayed.map(task => {
               return (
-                <Reorder.Item value={task} key={task.id}>
-                  <Task
-                    key={task.id}
-                    task={task}
-                    handleRemoveTask={handleRemoveTask}
-                    handleCheckTask={handleCheckTask}
-                    handleRecycleTask={handleRecycleTask}
-                    dispatch={dispatch}
-                  />
-                </Reorder.Item>
+                <Task
+                  key={task.id}
+                  task={task}
+                  handleRemoveTask={handleRemoveTask}
+                  handleCheckTask={handleCheckTask}
+                  handleRecycleTask={handleRecycleTask}
+                  dispatch={dispatch}
+                  isDark={isDark}
+                />
               );
             })}
           </Reorder.Group>

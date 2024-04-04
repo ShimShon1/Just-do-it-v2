@@ -3,6 +3,8 @@ import { createContext, useContext } from "react";
 type AppContext = {
   hideDone: boolean;
   keepText: boolean;
+  isDark: boolean;
+  setIsDark: React.Dispatch<React.SetStateAction<boolean>>;
   handleHideDone: () => void;
   handleKeepText: () => void;
 };

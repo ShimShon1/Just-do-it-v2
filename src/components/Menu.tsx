@@ -1,6 +1,6 @@
 // File: Menu.jsx
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Slider from "./Slider";
 import { useAppContext } from "../AppContext";
 
@@ -8,12 +8,12 @@ type menuProps = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
 export default function Menu({ isOpen, setIsOpen }: menuProps) {
+  const { isDark, setIsDark } = useAppContext();
   const { hideDone, handleHideDone, handleKeepText, keepText } =
     useAppContext();
-  const [isDark, setIsDark] = useState(
-    false || JSON.parse(localStorage.getItem("darkMode")!)
-  );
+
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("darkMode")!)) {
       document.body.classList.add("dark");
@@ -30,7 +30,7 @@ export default function Menu({ isOpen, setIsOpen }: menuProps) {
   return (
     <div
       className={
-        "absolute left-1/2 -translate-x-1/2 transform  rounded-sm border-2 dark:border-slate-800 dark:shadow-slate-900 " +
+        "absolute left-1/2 z-10 -translate-x-1/2 transform  rounded-sm border-2 dark:border-slate-800 dark:shadow-slate-900 " +
         (isOpen ? "block" : "hidden")
       }
     >
